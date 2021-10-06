@@ -9,14 +9,18 @@ const NavBar = () => {
 
       <ul className="navbar__links">
         <li>
-          <Link to="/project">
+          <Link to="/project" className="project__link">
             <i class="fas fa-archive"></i>
             Project
           </Link>
         </li>
       </ul>
 
-      <div className="hamburger__menu"></div>
+      <div className="hamburger__menu">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </nav>
   );
 };
