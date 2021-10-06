@@ -1,6 +1,6 @@
 .navbar {
   width: 100%;
-  background-color: #171717;
+  background-color: #a7c2e0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -9,7 +9,7 @@
 }
 
 .navbar__logo h2 {
-  color: #a7c2e0;
+  color: #eff2f7;
   font-size: 1.4rem;
   cursor: pointer;
 }
@@ -33,7 +33,7 @@
 }
 
 .project__link {
-  background: #333;
+  background: #89b6eb;
   padding: 10px;
   border-radius: 8px;
 }

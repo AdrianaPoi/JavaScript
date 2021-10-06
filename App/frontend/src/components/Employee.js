@@ -1,7 +1,7 @@
 import "./Employee.css";
 import { useState } from "react";
 import Axios from "axios";
-//import background from "./img/img.jpg"
+//import background from "../img/img.jpg";
 
 const Employee = () => {
   const [employeeList, setEmployeeList] = useState([]);
@@ -13,7 +13,7 @@ const Employee = () => {
   };
 
   return (
-    // <div style={{ backgroundImage: `url(${background})`, height: "100vh" }}>
+    //<div style={{ backgroundImage: `url(${background})` }}>
     <div className="App">
       <button className="button" onClick={getEmployees}>
         Show Employees
