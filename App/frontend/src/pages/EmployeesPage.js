@@ -1,7 +1,7 @@
 import "./EmployeesPage.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts as listProducts } from "../redux/actions/productActions";
+import { getProducts as listProducts } from "../redux/actions/employeeActions";
 
 const EmployeesPage = () => {
   const dispatch = useDispatch();
@@ -18,6 +18,7 @@ const EmployeesPage = () => {
         <table className="table">
           <thead>
             <tr>
+              <th scope="col">ID</th>
               <th scope="col">Name</th>
               <th scope="col">Adress</th>
               <th scope="col">Email</th>
@@ -36,6 +37,7 @@ const EmployeesPage = () => {
               return (
                 <tbody>
                   <tr>
+                    <td> {val.id}</td>
                     <td> {val.name}</td>
                     <td> {val.adress}</td>
                     <td> {val.email}</td>
