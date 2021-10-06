@@ -4,44 +4,40 @@ import Axios from "axios";
 //import background from "./img/img.jpg"
 
 const Project = () => {
-  const [employeeList, setEmployeeList] = useState([]);
+  const [projectList, setProjectList] = useState([]);
 
-  const getEmployees = () => {
-    Axios.get("http://localhost:3000/api/all").then((response) => {
-      setEmployeeList(response.data);
+  function getProjects() {
+    Axios.get("http://localhost:3000/api/projects").then((response) => {
+      setProjectList(response.data);
     });
-  };
+  }
 
   return (
     // <div style={{ backgroundImage: `url(${background})`, height: "100vh" }}>
     <div className="App">
-      <button className="button" onClick={getEmployees}>
-        Show Employees
+      <button className="button" onClick={getProjects}>
+        Show Projects
       </button>
 
       <table className="table">
         <thead>
           <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Adress</th>
-            <th scope="col">Email</th>
-            <th scope="col">Hire Date</th>
-            <th scope="col">Salary</th>
-            <th scope="col">Job Title</th>
-            <th scope="col">Project Id</th>
+            <th scope="col">Project Name</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">Planned end date</th>
+            <th scope="col">Description</th>
+            <th scope="col">Project Code</th>
           </tr>
         </thead>
-        {employeeList.map((val) => {
+        {projectList.map((val) => {
           return (
             <tbody>
               <tr>
-                <td> {val.name}</td>
-                <td> {val.adress}</td>
-                <td> {val.email}</td>
-                <td> {val.hire_date}</td>
-                <td> {val.salary}</td>
-                <td> {val.job_title}</td>
-                <td> {val.projectId}</td>
+                <td> {val.project_name}</td>
+                <td> {val.start_date}</td>
+                <td> {val.planned_end_date}</td>
+                <td> {val.description}</td>
+                <td> {val.project_code}</td>
               </tr>
             </tbody>
           );
