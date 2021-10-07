@@ -11,13 +11,9 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  //   Typography,
-  //   Divider,
-  //   Button,
+  Button,
 } from "@material-ui/core";
 import EmployeeForm from "./EmployeeForm";
-// import ButterToast, { Cinnamon } from "butter-toast";
-// import { DeleteSweep } from "@material-ui/icons";
 
 const styles = (theme) => ({
   paper: {
@@ -33,14 +29,25 @@ const styles = (theme) => ({
 });
 
 const Employee = ({ classes, ...props }) => {
+  const [currentId, setCurrentId] = useState(0);
+
   useEffect(() => {
     props.fetchAllEmployees();
   }, []); //DidMount
+
+  const onDelete = (id) => {
+    const onSuccess = () => {
+      window.alert("submitted succeeded");
+    };
+
+    if (window.confirm("Are you sure to delete this record?"))
+      props.deleteEmployee(id, onSuccess);
+  };
   return (
     <Grid container>
       <Grid item xs={5}>
         <Paper className={classes.paper}>
-          <EmployeeForm />
+          <EmployeeForm {...{ currentId, setCurrentId }} />
         </Paper>
       </Grid>
       <Grid item xs={7}>
@@ -77,6 +84,24 @@ const Employee = ({ classes, ...props }) => {
                       <TableCell align="right">{record.salary}</TableCell>
                       <TableCell align="right">{record.job_title}</TableCell>
                       <TableCell align="right">{record.projectId}</TableCell>
+                      <td className={classes.actionDiv}>
+                        <Button
+                          variant="contained"
+                          size="small"
+                          className={classes.smMargin}
+                          onClick={() => setCurrentId(record._id)}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          variant="contained"
+                          size="small"
+                          className={classes.smMargin}
+                          onClick={() => onDelete(record._id)}
+                        >
+                          Delete
+                        </Button>
+                      </td>
                     </TableRow>
                   </TableBody>
                 );
@@ -95,7 +120,7 @@ const mapStateToProps = (state) => ({
 
 const mapActionToProps = {
   fetchAllEmployees: actions.fetchAll,
-  //deletePostMessage: actions.Delete,
+  deleteEmployee: actions.Delete,
 };
 
 export default connect(

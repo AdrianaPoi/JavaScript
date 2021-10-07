@@ -7,10 +7,9 @@ export default {
   employeeAction(url = baseUrl + "api/") {
     return {
       fetchAll: () => axios.get(url + "all"),
-      //fetchById: id => axios.get(url + id),
-      create: (newRecord) => axios.post(url, newRecord),
-      update: (id, updatedRecord) => axios.put(url + id, updatedRecord),
-      delete: (id) => axios.delete(url + id),
+      create: (newRecord) => axios.post(url + "new", newRecord),
+      update: (updatedRecord) => axios.put(url + "edit", updatedRecord),
+      delete: (id) => axios.delete(url + "delete/" + id),
     };
   },
 };

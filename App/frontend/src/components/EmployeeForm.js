@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { TextField, withStyles, Button } from "@material-ui/core";
 import useForm from "./useForm";
-// import { connect } from "react-redux";
-// import * as actions from "../actions/postMessage";
+import { connect } from "react-redux";
+import * as actions from "../redux/actions/employeeAction";
 // import ButterToast, { Cinnamon } from "butter-toast";
 // import { AssignmentTurnedIn } from "@material-ui/icons";
 
 const initialFieldValues = {
-  // id: "",
+  //id: "",
   name: "",
   adress: "",
   email: "",
@@ -34,6 +34,15 @@ const styles = (theme) => ({
 });
 
 const EmployeeForm = ({ classes, ...props }) => {
+  useEffect(() => {
+    if (props.currentId != 0) {
+      setValues({
+        ...props.postEmployeeList.find((x) => x._id == props.currentId),
+      });
+      setErrors({});
+    }
+  }, [props.currentId]);
+
   const validate = () => {
     let temp = { ...errors };
     temp.name = values.name ? "" : "This field is required.";
@@ -56,24 +65,13 @@ const EmployeeForm = ({ classes, ...props }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(values);
-    e.preventDefault();
-    // const onSuccess = () => {
-    //     ButterToast.raise({
-    //         content: <Cinnamon.Crisp title="Post Box"
-    //             content="Submitted successfully"
-    //             scheme={Cinnamon.Crisp.SCHEME_PURPLE}
-    //             icon={<AssignmentTurnedIn />}
-    //         />
-    //     })
-    //     resetForm()
-    // }
+    const onSuccess = () => {
+      window.alert("submitted succeeded");
+      resetForm();
+    };
     if (validate()) {
-      //     if (props.currentId == 0)
-      //         props.createPostMessage(values, onSuccess)
-      //     else
-      //         props.updatePostMessage(props.currentId, values, onSuccess)
-      // }
-      window.alert("validate succeeded");
+      if (props.currentId == 0) props.createEmployee(values, onSuccess);
+      else props.updateEmployee(values, onSuccess);
     }
   };
 
@@ -167,12 +165,15 @@ const EmployeeForm = ({ classes, ...props }) => {
 };
 
 const mapStateToProps = (state) => ({
-  postMessageList: state.postMessage.list,
+  postEmployeeList: state.employeeReducer.list,
 });
 
-// const mapActionToProps = {
-//   createPostMessage: actions.create,
-//   updatePostMessage: actions.update,
-// };
+const mapActionToProps = {
+  createEmployee: actions.create,
+  updateEmployee: actions.update,
+};
 
-export default withStyles(styles)(EmployeeForm);
+export default connect(
+  mapStateToProps,
+  mapActionToProps
+)(withStyles(styles)(EmployeeForm));

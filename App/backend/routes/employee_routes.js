@@ -73,18 +73,4 @@ router.get("/employee/project", (req, res) => {
     });
 });
 
-//get employee + project
-router.get("employeeproject", (req, res) => {
-  db.employee.findAll({
-    include: [
-      {
-        model: UsersContactsLists,
-        where: {
-          userId: 1,
-        },
-      },
-    ],
-  });
-});
-
 module.exports = router;
