@@ -1,23 +1,64 @@
-import * as actionTypes from "../constants/projectConstants";
-import axios from "axios";
+import api from "./api.js";
 
-export const getProjects = () => async (dispatch) => {
-  try {
-    dispatch({ type: actionTypes.GET_PROJECTS_REQUEST });
+export const ACTION_TYPES = {
+  CREATE: "CREATE",
+  UPDATE: "UPDATE",
+  DELETE: "DELETE",
+  FETCH_ALL: "FETCH_ALL",
+};
 
-    const { data } = await axios.get("http://localhost:3000/api/projects");
+export const fetchAll = () => (dispatch) => {
+  api
+    .projectAction()
+    .fetchAll()
+    .then((res) => {
+      console.log(res);
+      dispatch({
+        type: ACTION_TYPES.FETCH_ALL,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
 
-    dispatch({
-      type: actionTypes.GET_PROJECTS_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: actionTypes.GET_PROJECTS_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
+export const create = (data, onSuccess) => (dispatch) => {
+  api
+    .projectAction()
+    .create(data)
+    .then((res) => {
+      dispatch({
+        type: ACTION_TYPES.CREATE,
+        payload: res.data,
+      });
+      onSuccess();
+    })
+    .catch((err) => console.log(err));
+};
+
+export const update = (data, onSuccess) => (dispatch) => {
+  api
+    .projectAction()
+    .update(data)
+    .then((res) => {
+      dispatch({
+        type: ACTION_TYPES.UPDATE,
+        payload: res.data,
+      });
+      onSuccess();
+    })
+    .catch((err) => console.log(err));
+};
+
+export const Delete = (id, onSuccess) => (dispatch) => {
+  api
+    .projectAction()
+    .delete(id)
+    .then((res) => {
+      dispatch({
+        type: ACTION_TYPES.DELETE,
+        payload: id,
+      });
+      onSuccess();
+    })
+    .catch((err) => console.log(err));
 };

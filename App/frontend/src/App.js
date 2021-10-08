@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //import EmployeesPage from "./pages/EmployeesPage";
 import Employee from "./components/Employee";
 
-import ProjectsPage from "./pages/ProjectsPage";
+import Project from "./components/Project";
 //components
 import NavBar from "./components/NavBar";
 function App() {
@@ -15,7 +15,7 @@ function App() {
       <main>
         <Switch>
           <Route exact path="/" component={Employee} />
-          <Route exact path="/project" component={ProjectsPage} />
+          <Route exact path="/project" component={Project} />
         </Switch>
       </main>
     </Router>

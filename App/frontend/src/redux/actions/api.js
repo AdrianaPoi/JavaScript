@@ -12,4 +12,13 @@ export default {
       delete: (id) => axios.delete(url + "delete/" + id),
     };
   },
+
+  projectAction(url = baseUrl + "api/") {
+    return {
+      fetchAll: () => axios.get(url + "projects"),
+      create: (newRecord) => axios.post(url + "new/project", newRecord),
+      update: (updatedRecord) => axios.put(url + "edit/project", updatedRecord),
+      delete: (id) => axios.delete(url + "delete/project/" + id),
+    };
+  },
 };

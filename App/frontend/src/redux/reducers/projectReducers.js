@@ -1,22 +1,36 @@
-import * as actionTypes from "../constants/projectConstants";
+import { ACTION_TYPES } from "../actions/employeeAction";
 
-export const getProjectsReducer = (state = { projects: [] }, action) => {
+const initialState = {
+  list: [],
+};
+//project.list
+export const projectReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.GET_PROJECTS_REQUEST:
+    case ACTION_TYPES.FETCH_ALL:
       return {
-        loading: true,
-        projects: [],
+        ...state,
+        list: [...action.payload],
       };
-    case actionTypes.GET_PROJECTS_SUCCESS:
+    case ACTION_TYPES.CREATE:
       return {
-        projects: action.payload,
-        loading: false,
+        ...state,
+        list: [...state.list, action.payload],
       };
-    case actionTypes.GET_PROJECTS_FAIL:
+    case ACTION_TYPES.UPDATE:
       return {
-        loading: false,
-        error: action.payload,
+        ...state,
+        //list: [...state.list, action.payload],
+        list: state.list.map((x) =>
+          x._id == action.payload._id ? action.payload : x
+        ),
       };
+
+    case ACTION_TYPES.DELETE:
+      return {
+        ...state,
+        list: state.list.filter((x) => x._id != action.payload),
+      };
+
     default:
       return state;
   }
