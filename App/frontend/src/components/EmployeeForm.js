@@ -3,8 +3,6 @@ import { TextField, withStyles, Button } from "@material-ui/core";
 import useForm from "./useForm";
 import { connect } from "react-redux";
 import * as actions from "../redux/actions/employeeAction";
-// import ButterToast, { Cinnamon } from "butter-toast";
-// import { AssignmentTurnedIn } from "@material-ui/icons";
 
 const initialFieldValues = {
   //id: "",
@@ -37,7 +35,7 @@ const EmployeeForm = ({ classes, ...props }) => {
   useEffect(() => {
     if (props.currentId != 0) {
       setValues({
-        ...props.postEmployeeList.find((x) => x._id == props.currentId),
+        ...props.postEmployeeList.find((x) => x.id == props.currentId),
       });
       setErrors({});
     }

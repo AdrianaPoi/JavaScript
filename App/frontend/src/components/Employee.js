@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as actions from "../redux/actions/employeeAction";
+import moment from "moment";
 import {
   Grid,
   Paper,
@@ -38,11 +39,12 @@ const Employee = ({ classes, ...props }) => {
   const onDelete = (id) => {
     const onSuccess = () => {
       window.alert("submitted succeeded");
+      window.location.reload(false);
     };
-
     if (window.confirm("Are you sure to delete this record?"))
       props.deleteEmployee(id, onSuccess);
   };
+
   return (
     <Grid container>
       <Grid item xs={5}>
@@ -80,7 +82,9 @@ const Employee = ({ classes, ...props }) => {
                       <TableCell align="right">{record.name}</TableCell>
                       <TableCell align="right">{record.adress}</TableCell>
                       <TableCell align="right">{record.email}</TableCell>
-                      <TableCell align="right">{record.hire_date}</TableCell>
+                      <TableCell align="left" type="date">
+                        {moment(record.hire_date).format("D.MM.YYYY")}
+                      </TableCell>
                       <TableCell align="right">{record.salary}</TableCell>
                       <TableCell align="right">{record.job_title}</TableCell>
                       <TableCell align="right">{record.projectId}</TableCell>
@@ -89,7 +93,7 @@ const Employee = ({ classes, ...props }) => {
                           variant="contained"
                           size="small"
                           className={classes.smMargin}
-                          onClick={() => setCurrentId(record._id)}
+                          onClick={() => setCurrentId(record.id)}
                         >
                           Edit
                         </Button>
@@ -97,7 +101,7 @@ const Employee = ({ classes, ...props }) => {
                           variant="contained"
                           size="small"
                           className={classes.smMargin}
-                          onClick={() => onDelete(record._id)}
+                          onClick={() => onDelete(record.id)}
                         >
                           Delete
                         </Button>

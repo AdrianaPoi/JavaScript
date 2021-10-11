@@ -1,4 +1,4 @@
-import { ACTION_TYPES } from "../actions/employeeAction";
+import { ACTION_TYPES } from "../actions/projectActions";
 
 const initialState = {
   list: [],

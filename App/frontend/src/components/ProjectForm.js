@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { TextField, withStyles, Button } from "@material-ui/core";
 import useForm from "./useForm";
 import { connect } from "react-redux";
-import * as actions from "../redux/actions/employeeAction";
-// import ButterToast, { Cinnamon } from "butter-toast";
-// import { AssignmentTurnedIn } from "@material-ui/icons";
+import * as actions from "../redux/actions/projectActions";
 
 const initialFieldValues = {
   //id: "",
@@ -35,7 +33,7 @@ const ProjectForm = ({ classes, ...props }) => {
   useEffect(() => {
     if (props.currentId != 0) {
       setValues({
-        ...props.postProjectList.find((x) => x._id == props.currentId),
+        ...props.postProjectList.find((x) => x.id == props.currentId),
       });
       setErrors({});
     }
