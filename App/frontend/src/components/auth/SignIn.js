@@ -21,7 +21,7 @@ const useStyles = makeStyles({
 
 const SignIn = () => {
   const classes = useStyles();
-  const auth = useSelector((state) => state.auth);
+  const authReducer = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const [creds, setCreds] = useState({
     email: "",
@@ -34,7 +34,7 @@ const SignIn = () => {
     setCreds({ email: "", password: "" });
   };
 
-  if (auth._id) return <Redirect to="/" />;
+  if (authReducer.id) return <Redirect to="/" />;
 
   return (
     <>

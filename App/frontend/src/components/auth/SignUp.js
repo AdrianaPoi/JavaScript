@@ -21,7 +21,8 @@ const useStyles = makeStyles({
 
 const SignUp = () => {
   const classes = useStyles();
-  const auth = useSelector((state) => state.auth);
+  const authReducer = useSelector((state) => state.authReducer);
+  console.log(authReducer);
   const dispatch = useDispatch();
   const [user, setUser] = useState({
     name: "",
@@ -35,7 +36,7 @@ const SignUp = () => {
     setUser({ name: "", email: "", password: "" });
   };
 
-  if (auth._id) return <Redirect to="/" />;
+  if (authReducer.id) return <Redirect to="/" />;
 
   return (
     <>

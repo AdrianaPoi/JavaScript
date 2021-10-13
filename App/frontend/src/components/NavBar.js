@@ -6,7 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { signOut } from "../redux/actions/authAction";
+import { signOut } from "../../src/redux/actions/authAction";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,13 +30,15 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   console.log(state);
-  const user = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.authReducer);
 
   const handleSignOut = () => {
     dispatch(signOut());
     history.push("/signin");
   };
-
+  const handleProjects = () => {
+    history.push("/project");
+  };
   return (
     <>
       <div className={classes.root}>
@@ -47,8 +49,7 @@ const NavBar = () => {
                 AquaSoft
               </Link>
             </Typography>
-
-            {user._id ? (
+            {user.id ? (
               <>
                 <Typography variant="subtitle2" className={classes.title}>
                   Logged in as {user.name}
@@ -57,11 +58,18 @@ const NavBar = () => {
                   edge="end"
                   color="inherit"
                   className={classes.authButton}
-                  onClick={() => handleSignOut()}
+                  onClick={() => handleProjects()}
                 >
-                  <Link className={classes.linkStyle} to="/project">
+                  <Link className={classes.linkStyle} to="/">
                     Projects
                   </Link>
+                </Button>
+                <Button
+                  edge="end"
+                  color="inherit"
+                  className={classes.authButton}
+                  onClick={() => handleSignOut()}
+                >
                   <Link className={classes.linkStyle} to="/">
                     SignOut
                   </Link>

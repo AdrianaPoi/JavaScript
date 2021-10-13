@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const models = require("../models");
 const express = require("express");
 const router = express.Router();
-const config = require("../config/auth.config");
 
 router.post("/", async (req, res) => {
   let user = await models.user.findOne({

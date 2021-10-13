@@ -61,7 +61,7 @@ export const signOut = () => {
 
 export const loadUser = () => {
   return (dispatch, getState) => {
-    const token = getState().auth.token;
+    const token = getState().authReducer.token;
     if (token) {
       dispatch({
         type: "USER_LOADED",
