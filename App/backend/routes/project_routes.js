@@ -1,14 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
+const auth = require("../middleware/auth");
 
 // get all projects
-router.get("/projects", (req, res) => {
+router.get("/projects", auth, (req, res) => {
   db.project.findAll().then((projects) => res.send(projects));
 });
 
 // post new project
-router.post("/new/project", (req, res) => {
+router.post("/new/project", auth, (req, res) => {
   db.project
     .create({
       project_name: req.body.project_name,
@@ -21,7 +22,7 @@ router.post("/new/project", (req, res) => {
 });
 
 // edit a project
-router.put("/edit/project", (req, res) => {
+router.put("/edit/project", auth, (req, res) => {
   db.project
     .update(
       {
@@ -39,7 +40,7 @@ router.put("/edit/project", (req, res) => {
 });
 
 // delete project
-router.delete("/delete/project/:id", (req, res) => {
+router.delete("/delete/project/:id", auth, (req, res) => {
   db.project
     .destroy({
       where: {

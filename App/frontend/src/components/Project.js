@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as actions from "../redux/actions/projectActions";
 import moment from "moment";
+import { useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 import {
   Grid,
   Paper,
@@ -31,6 +33,7 @@ const styles = (theme) => ({
 
 const Project = ({ classes, ...props }) => {
   const [currentId, setCurrentId] = useState(0);
+  const auth = useSelector((state) => state.authReducer);
 
   useEffect(() => {
     props.fetchAllProjects();
@@ -45,6 +48,8 @@ const Project = ({ classes, ...props }) => {
     if (window.confirm("Are you sure to delete this record?"))
       props.deleteProjects(id, onSuccess);
   };
+  if (!auth.id) return <Redirect to="/signin" />;
+
   return (
     <Grid container>
       <Grid item xs={5}>

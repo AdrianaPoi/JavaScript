@@ -1,4 +1,7 @@
-import api from "./api";
+//import api from "./api";
+import axios from "axios";
+import { setHeaders, url } from "../../url";
+import { toast } from "react-toastify";
 
 export const ACTION_TYPES = {
   CREATE: "CREATE",
@@ -8,57 +11,67 @@ export const ACTION_TYPES = {
 };
 
 export const fetchAll = () => (dispatch) => {
-  api
-    .projectAction()
-    .fetchAll()
+  axios
+    .get(`${url}/projects`, setHeaders())
     .then((res) => {
-      console.log(res);
       dispatch({
         type: ACTION_TYPES.FETCH_ALL,
         payload: res.data,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
-export const create = (data, onSuccess) => (dispatch) => {
-  api
-    .projectAction()
-    .create(data)
+export const create = (data) => (dispatch, getState) => {
+  const author = getState().authReducer.name;
+  const uid = getState().authReducer.id;
+  axios
+    .post(`${url}/new/project`, { ...data, author, uid }, setHeaders())
     .then((res) => {
       dispatch({
         type: ACTION_TYPES.CREATE,
         payload: res.data,
       });
-      onSuccess();
     })
-    .catch((err) => console.log(err));
+    .catch((error) => {
+      console.log(error.response);
+
+      toast.error(error.response?.data, {});
+    });
 };
 
 export const update = (data, onSuccess) => (dispatch) => {
-  api
-    .projectAction()
-    .update(data)
+  axios
+    .put(`${url}/edit/project`, data, setHeaders())
     .then((res) => {
       dispatch({
         type: ACTION_TYPES.UPDATE,
         payload: res.data,
       });
-      onSuccess();
     })
-    .catch((err) => console.log(err));
+    .catch((error) => {
+      console.log(error);
+      toast.error(error.response?.data, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    });
 };
 
-export const Delete = (id, onSuccess) => (dispatch) => {
-  api
-    .projectAction()
-    .delete(id)
-    .then((res) => {
+export const Delete = (id) => (dispatch) => {
+  axios
+    .delete(`${url}/delete/project/${id}`, setHeaders())
+    .then(() => {
       dispatch({
         type: ACTION_TYPES.DELETE,
         payload: id,
       });
-      onSuccess();
     })
-    .catch((err) => console.log(err));
+    .catch((error) => {
+      console.log(error);
+      toast.error(error.response?.data, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    });
 };
