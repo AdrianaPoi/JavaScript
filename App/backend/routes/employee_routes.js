@@ -4,7 +4,7 @@ const db = require("../models");
 const auth = require("../middleware/auth");
 
 // get all employees
-router.get("/all", (req, res) => {
+router.get("/all", auth, async (req, res, next) => {
   db.employee.findAll().then((employees) => res.send(employees));
 });
 
@@ -20,7 +20,7 @@ router.get("/find/:name", (req, res) => {
 });
 
 // post new employee
-router.post("/new", (req, res) => {
+router.post("/new", auth, (req, res) => {
   db.employee
     .create({
       name: req.body.name,
@@ -34,7 +34,7 @@ router.post("/new", (req, res) => {
 });
 
 // edit a employee
-router.put("/edit", (req, res) => {
+router.put("/edit", auth, (req, res) => {
   db.employee
     .update(
       {
@@ -53,7 +53,7 @@ router.put("/edit", (req, res) => {
 });
 
 // delete employee
-router.delete("/delete/:id", (req, res) => {
+router.delete("/delete/:id", auth, (req, res) => {
   db.employee
     .destroy({
       where: {

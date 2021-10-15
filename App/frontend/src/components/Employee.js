@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as actions from "../redux/actions/employeeAction";
 import moment from "moment";
+import { useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 import {
   Grid,
   Paper,
@@ -31,7 +33,7 @@ const styles = (theme) => ({
 
 const Employee = ({ classes, ...props }) => {
   const [currentId, setCurrentId] = useState(0);
-
+  const auth = useSelector((state) => state.authReducer);
   useEffect(() => {
     props.fetchAllEmployees();
   }, []); //DidMount
@@ -39,12 +41,12 @@ const Employee = ({ classes, ...props }) => {
   const onDelete = (id) => {
     const onSuccess = () => {
       window.alert("submitted succeeded");
-      window.location.reload(false);
+      window.location.reload();
     };
     if (window.confirm("Are you sure to delete this record?"))
       props.deleteEmployee(id, onSuccess);
   };
-
+  if (!auth.id) return <Redirect to="/signin" />;
   return (
     <Grid container>
       <Grid item xs={5}>

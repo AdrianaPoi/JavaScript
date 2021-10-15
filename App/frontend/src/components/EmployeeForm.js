@@ -50,7 +50,8 @@ const EmployeeForm = ({ classes, ...props }) => {
     temp.salary = values.salary ? "" : "This field is required.";
     temp.job_title = values.job_title ? "" : "This field is required.";
     temp.projectId = values.projectId ? "" : "This field is required.";
-
+    // temp.author = values.author;
+    // temp.uid = values.uid;
     setErrors({
       ...temp,
     });
@@ -70,6 +71,7 @@ const EmployeeForm = ({ classes, ...props }) => {
     if (validate()) {
       if (props.currentId == 0) props.createEmployee(values, onSuccess);
       else props.updateEmployee(values, onSuccess);
+      resetForm();
     }
   };
 
